@@ -48,11 +48,23 @@ app.post('/upload', function(req,res){
 
 });
 app.get('/setup', function(req,res){
-  var sections = [{title: "News"}, {title: "Sports"}, {title: "Editorial"}, {title: "Recess"}, {title: "Towerview"}];
+  var sections = [{title: "News"}, {title: "Sports"}, {title: "Editorial"}, {title: "Recess"}, {title: "Towerview"}]; 
+  var articles = {
+    news: [{id: "N01", articlename: "Muhammed Pete", section: "Speakers and Events", hierarchy: 1.0}, {id: "N02", articlename: "Mark Taylor", section: "Features" ,hierarchy: 0.1}, {id: "N03" ,articlename: "DSG", section: "DSG" , hierarchy: 0.1}],
+    sports: [{id: "S01", articlename: "M Lax", section: "M Lacrosse",hierarchy: 0.0}, {id: "S02",articlename: "W Lax", section: "W Lacrosse" ,hierarchy: 0.2}, {id: "S03",articlename: "W BBall Gammer", section: "W Basketball" , hierarchy: 1.0}],
+    editorial: [{id: "E01",articlename: "Editorial", section: "Editorial",hierarchy: 1.0}, {id: "E02",articlename: "Column 1", section: "Column",hierarchy: 1.1}, {id: "E03",articlename: "Column 2", section: "Column" ,hierarchy: 1.2}],
+    recess: [{id: "R01",articlename: "Feautre 1", section: "Recess Feature",hierarchy: 1.0}, {id: "R02",articlename: "Film Review", section: "Film Review",hierarchy: 1.1}, {id: "R03",articlename: "Arts Review", section: "Arts Review" ,hierarchy: 1.2}]};
+
+    
+ 
+ 
+    
+  
   res.render('setup',{
               locals: {
                 name: "Setup Page",
-            sections: sections
+            sections: sections,
+            articles: articles
   }
   });
 });
