@@ -7,16 +7,19 @@ stats;
 xml2js = require('xml2js'); //takes xml, returns json.
 express = require('express');
 
-var data = require('./data'); // data.js handles couchdb for us
+var cData = require('./data'); // data.js handles couchdb for us
 
 // xml2js is the shiznit
 
 var parser = new xml2js.Parser(); //create parser to handle conversions
 
 parser.addListener('end', function(result) { //
-	console.log(sys.inspect(result)); //Outputs stringified JSON, debugging purposes
-    console.log('Done.'); 	
-
+		console.log("json: "+result);
+		cData.insert(result, function(err, res) {
+			if(err)
+				throw err
+			console.log("data inserted: "+ res);
+		});
 });
 
 var app = express.createServer();
@@ -38,16 +41,15 @@ app.get('/', function(req, res){
 });
 
 function getxml(folder){
-if(folder=="unzipped/__MACOSX"){
-console.log("evil folder");
-return;
-}
-	console.log("getXML "+ folder);
+	if(folder=="unzipped/__MACOSX"){
+		console.log("evil folder");
+		return;
+	}
 	fs.stat(folder, function(err, stats){
 		var dir =false;
 		if(err)
 			throw err
-		dir = stats.isDirectory();					// this is giving an error for certain files
+		dir = stats.isDirectory();
 	
 		if (dir) {	
 			fs.readdir(folder, function(err, files){
@@ -59,26 +61,20 @@ return;
 			});
 		}				  // put in a catch for non-xml
 		else {
-			console.log("dir is false for: " +folder);
-			toparse(folder);  // if folder is not a directory, parse it
+			var patt=new RegExp('.xml','');
+			if(folder.match(patt))
+				toparse(folder);  // if folder is not a directory, parse it
+			else console.log("not saving: "+folder);
 		}	
 	});
 }
 
 function toparse(file){
-console.log("parsing: " +file);
 	fs.readFile(file, function(err, data) {
 		if (err) throw err;
-			console.log("reading file data: "+data);
+		console.log("reading file data: "+file);
 		parser.parseString(data); // Send xml file to get parsed, return as 'data'
 	});
-
-	//send JSON to database
-	data.insert(data, function(err, res) {
-		console.log("data inserted: "+ res);
-	// return function goes here
-});
-
 }
 
 app.post('/upload', function(req,res){
