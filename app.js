@@ -38,25 +38,32 @@ app.get('/', function(req, res){
 });
 
 function getxml(folder){
-	var dir = false;
+if(folder=="unzipped/__MACOSX"){
+console.log("evil folder");
+return;
+}
+	console.log("getXML "+ folder);
 	fs.stat(folder, function(err, stats){
+		var dir =false;
 		if(err)
 			throw err
-		console.log("getXML "+ folder);
 		dir = stats.isDirectory();					// this is giving an error for certain files
 	
-	if (dir) {	
-		fs.readdir(folder, function(err, files){
-			if (err) 
-				throw err;
-			files.forEach(function(file){
-				getxml(file);
+		if (dir) {	
+			fs.readdir(folder, function(err, files){
+				if (err) 
+					throw err;
+				files.forEach(function(file){
+					getxml(folder+"/"+file);
+				});
 			});
-		});
-	}				  // put in a catch for non-xml
-console.log("dir is false for: " +folder);
-	toparse(folder);  // if folder is not a directory, parse it
-});}
+		}				  // put in a catch for non-xml
+		else {
+			console.log("dir is false for: " +folder);
+			toparse(folder);  // if folder is not a directory, parse it
+		}	
+	});
+}
 
 function toparse(file){
 console.log("parsing: " +file);
