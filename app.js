@@ -80,7 +80,7 @@ app.post('/upload', function(req,res){
     var exec = require('child_process').exec; 
     function puts (error, stdout, stderr){ 
       res.end('Unzip Results: \n' + stdout);
-	  fs.readdir('/home/seanmiller/zipfiles/', function(err, files){ // this directory should be wherever we are uploading the file to
+	  fs.readdir('unzipped/', function(err, files){ // this directory should be wherever we are uploading the file to
 	  	files.forEach(function(file){
 	  		//exec("unzip " + file);
 			getxml(file);
@@ -90,7 +90,7 @@ app.post('/upload', function(req,res){
       console.log('stdout: ' + stdout);
 	  }
 	  
-    exec("unzip /home/seanmiller/zipfiles/*.zip", puts)			// this doesn't currently unzip correctly
+    exec("unzip -d unzipped/ zipfiles/*.zip", puts)			// this doesn't currently unzip correctly
   });
 
 });
