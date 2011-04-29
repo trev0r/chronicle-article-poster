@@ -39,10 +39,12 @@ app.get('/', function(req, res){
 
 function getxml(folder){
 	var dir = false;
-	fs.stat(folder, function(status, stats){
+	fs.stat(folder, function(err, stats){
+		if(err)
+			throw err
+		console.log("getXML "+ folder);
 		dir = stats.isDirectory();					// this is giving an error for certain files
-	});
-	console.log("getxml");
+	
 	if (dir) {	
 		fs.readdir(folder, function(err, files){
 			if (err) 
@@ -52,18 +54,21 @@ function getxml(folder){
 			});
 		});
 	}				  // put in a catch for non-xml
+console.log("dir is false for: " +folder);
 	toparse(folder);  // if folder is not a directory, parse it
-};
+});}
 
 function toparse(file){
+console.log("parsing: " +file);
 	fs.readFile(file, function(err, data) {
 		if (err) throw err;
-  		console.log(data);
-	parser.parseString(data); // Send xml file to get parsed, return as 'data'
+			console.log("reading file data: "+data);
+		parser.parseString(data); // Send xml file to get parsed, return as 'data'
 	});
 
 	//send JSON to database
 	data.insert(data, function(err, res) {
+		console.log("data inserted: "+ res);
 	// return function goes here
 });
 
@@ -83,11 +88,11 @@ app.post('/upload', function(req,res){
 	  fs.readdir('unzipped/', function(err, files){ // this directory should be wherever we are uploading the file to
 	  	files.forEach(function(file){
 	  		//exec("unzip " + file);
-			getxml(file);
+			getxml("unzipped/"+file);
 	  	});
-	  	console.log(files);
+	 // 	console.log(files);
 	  });
-      console.log('stdout: ' + stdout);
+ //     console.log('stdout: ' + stdout);
 	  }
 	  
     exec("unzip -d unzipped/ zipfiles/*.zip", puts)			// this doesn't currently unzip correctly
