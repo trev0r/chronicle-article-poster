@@ -112,8 +112,12 @@ app.get('/setup', function(req,res){
     editorial: [{id: "E01",articlename: "Editorial", section: "Editorial",hierarchy: 1.0}, {id: "E02",articlename: "Column 1", section: "Column",hierarchy: 1.1}, {id: "E03",articlename: "Column 2", section: "Column" ,hierarchy: 1.2}],
     recess: [{id: "R01",articlename: "Feautre 1", section: "Recess Feature",hierarchy: 1.0}, {id: "R02",articlename: "Film Review", section: "Film Review",hierarchy: 1.1}, {id: "R03",articlename: "Arts Review", section: "Arts Review" ,hierarchy: 1.2}]};
 
+      for (var key in articles) {
+        if (articles.hasOwnProperty(key))
+          articles[key] = addIndex(articles[key]);
+      }  
 
-res.render('setup',{
+res.render('setup',{      
       locals: {
         name: "Setup Page",
         sections: sections,
@@ -121,6 +125,12 @@ res.render('setup',{
       }
     });
 });
+
+function addIndex(section){
+  for(var i = 0; i < section.length; i++)
+    section[i].index = i;
+  return section;
+}
 
 
 app.get('/article/:id',function(req,res){
@@ -144,7 +154,9 @@ app.get('/article/:id',function(req,res){
             });
 });
 
-
+app.post('test',function(req,res){
+	res.send("bluh bluh");
+});
 
 
 

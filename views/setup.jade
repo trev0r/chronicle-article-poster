@@ -2,49 +2,49 @@ div.body
 h1=name
 
        
+form(action='/test', enctype='multipart/form-data', method='post')
+  #News
+  p='news'
+    - each section in articles.news
+        div.section
+        ul
+          li
+            input(type='text', name='name[' + section.index + ']', value=section.articlename)
+          li
+            div.p=section.section
+          br
 
-#News
-p='news'
-  - each section in articles.news
-      div.section
-      ul
-        li
-          div.p=section.articlename
-        li
-          div.p=section.section
-        br
+  #Sports
+  p='sports'
+    - each section in articles.sports
+        div.section
+        ul
+          li
+             div.p=section.articlename
+          li
+             div.p=section.section
+          br
 
-#Sports
-p='sports'
-  - each section in articles.sports
-      div.section
-      ul
-        li
-           div.p=section.articlename
-        li
-           div.p=section.section
-        br
+  #Edit
+  p='Edit'
+    - each section in articles.editorial
+        div.section
+        ul
+          li
+            div.p=section.articlename
+          li
+            div.p=section.section
+          br
 
-#Edit
-p='Edit'
-  - each section in articles.editorial
-      div.section
-      ul
-        li
-          div.p=section.articlename
-        li
-          div.p=section.section
-        br
-
-#Recess
-p='Recess'
-  - each section in articles.recess
-      div.section
-      ul
-        li
-          div.p=section.articlename
-        li
-          div.p=section.section
-        br
-
+  #Recess
+  p='Recess'
+    - each section in articles.recess
+        div.section
+        ul
+          li
+            div.p=section.articlename
+          li
+            div.p=section.section
+          br
+  input(type='submit', value='Upload')
     
