@@ -1,9 +1,50 @@
 div.body
 h1=name
 
-#section
-  - each section in sections
-     div.section
-       div.p=section.title
-  div.p="Prithvi changed something"
+       
+
+#News
+p='news'
+  - each section in articles.news
+      div.section
+      ul
+        li
+          div.p=section.articlename
+        li
+          div.p=section.section
+        br
+
+#Sports
+p='sports'
+  - each section in articles.sports
+      div.section
+      ul
+        li
+           div.p=section.articlename
+        li
+           div.p=section.section
+        br
+
+#Edit
+p='Edit'
+  - each section in articles.editorial
+      div.section
+      ul
+        li
+          div.p=section.articlename
+        li
+          div.p=section.section
+        br
+
+#Recess
+p='Recess'
+  - each section in articles.recess
+      div.section
+      ul
+        li
+          div.p=section.articlename
+        li
+          div.p=section.section
+        br
+
     
