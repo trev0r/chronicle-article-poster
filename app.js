@@ -55,18 +55,36 @@ app.get('/setup', function(req,res){
     editorial: [{id: "E01",articlename: "Editorial", section: "Editorial",hierarchy: 1.0}, {id: "E02",articlename: "Column 1", section: "Column",hierarchy: 1.1}, {id: "E03",articlename: "Column 2", section: "Column" ,hierarchy: 1.2}],
     recess: [{id: "R01",articlename: "Feautre 1", section: "Recess Feature",hierarchy: 1.0}, {id: "R02",articlename: "Film Review", section: "Film Review",hierarchy: 1.1}, {id: "R03",articlename: "Arts Review", section: "Arts Review" ,hierarchy: 1.2}]};
 
-    
- 
- 
-    
-  
-  res.render('setup',{
-              locals: {
-                name: "Setup Page",
-            sections: sections,
-            articles: articles
+
+res.render('setup',{
+      locals: {
+        name: "Setup Page",
+        sections: sections,
+        articles: articles
+      }
+    });
+});
+
+
+app.get('/article/:id',function(req,res){
+  article = {
+        id: 'N01',
+            type: 'article',
+            teaser: 'Posuere ipsum at tristique a, fringilla porta, fusce.',
+                body: 'Posuere ipsum at tristique a, fringilla porta, fusce. Ligula, nisl in augue platea semper. Amet mi odio arcu metus iaculis lectus dui adipiscing consequat, pede nec. Libero, phasellus class quis quis aliquet diam, dolor. Auctor. Ut, bibendum. Feugiat condimentum nibh enim elementum. Platea a, cubilia ac malesuada aliquam. Eni eu fermentum urna. Ut, sapien curabitur torquent, nostra sapien dolor suspendisse per, sociis diam. Tellus quis, in pellentesque. Eros blandit ipsum. Semper cras ut mus tincidunt tempor.',
+                    title: 'Eni magna hendrerit.',
+                    subtitle: 'More random text',
+                    authors: ['Trevor Terris', 'Dean Chen'],
+                    hiearchy: 1.0, 
+                    section: 'Speakers and Events',
+                    images: [{filename:'article_ChelseaPieroni.jpg' , photocredit:'Chelsea Pieroni/The Chronicle', caption:'' }, {filename:'thumb_ChelseaPieroni.jpg' , photocredit:'Chelsea Pieroni/The Chronicle', caption:'' }]
+
   }
-  });
+  res.render('article/'+req.params.id, {
+            locals:{
+            article: article
+            }
+            });
 });
 
 
