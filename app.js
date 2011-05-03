@@ -154,8 +154,8 @@ app.get('/article/:id',function(req,res){
             });
 });
 
-app.post('test',function(req,res){
-	res.send("bluh bluh");
+app.post('/test',function(req,res){
+  res.send(req.body.index[0]);
 });
 
 

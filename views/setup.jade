@@ -2,14 +2,14 @@ div.body
 h1=name
 
        
-form(action='/test', enctype='multipart/form-data', method='post')
+form(action='/test', method='post')
   #News
   p='news'
     - each section in articles.news
         div.section
         ul
           li
-            input(type='text', name='name[' + section.index + ']', value=section.articlename)
+            input(type='text', name='index[' + section.index + ']', value=section.articlename)
           li
             div.p=section.section
           br
